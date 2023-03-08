@@ -9,10 +9,11 @@ public class Main {
 
         ClientService clientService = new ClientService();
         UserService userService = new UserService();
-
         ConsoleUi consoleUi = new ConsoleUi(clientService, userService);
+
+        consoleUi.welcome();
+        consoleUi.addUserMenu();
+        consoleUi.loginMenu();
         consoleUi.mainMenu();
-
-
     }
 }
