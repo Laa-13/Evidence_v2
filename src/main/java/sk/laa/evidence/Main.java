@@ -11,7 +11,18 @@ public class Main {
         UserService userService = new UserService();
         ConsoleUi consoleUi = new ConsoleUi(clientService, userService);
 
-        consoleUi.welcome();
+        System.out.println("""
+                                        
+                                        
+                    Evidencia poistencov - jednoducha verzia.
+                    =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                    Prepracovana konzolova aplikacia, povodne ako projekt ku
+                    zaverecnej skuske IT network.
+                    =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                                        
+                                        
+                    Na prve spustenie treba vytvorit uzivatela s admin pravami.
+                    """);
         consoleUi.addUserMenu();
         consoleUi.loginMenu();
         consoleUi.mainMenu();
