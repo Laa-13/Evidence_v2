@@ -59,6 +59,11 @@ public class ClientService {
         return clientDtb.get(clientDtb.size() - 1);
     }
 
+    /**
+     * metoda na vymazanie posledneho elementu vlozeneho do arraylistu
+     *
+     * @return odstrani element s poslednym indexom .remove()
+     */
     public Client deleteLast() {
         return clientDtb.remove(clientDtb.size() - 1);
     }

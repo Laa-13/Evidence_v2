@@ -18,8 +18,37 @@ public class ConsoleUi {
         this.userService = userService;
     }
 
+    public void pressAnyKey() {
+        System.out.println("[Enter] - pokracovat");
+        if (scanner.nextLine().equalsIgnoreCase("[ press any key to continue ]")) {
+            System.out.println("there is no [any] key on the keyboard :(");
+        }
+        back = true;
+    }
+
+    public int onlyNumber() {
+        boolean flag;
+        String n;
+        int o = 0;
+        do {
+            n = scanner.nextLine().trim();
+            try {
+                o += Integer.parseInt(n);
+                flag = false;
+            } catch (NumberFormatException e) {
+                System.out.println("Zadana hodnota musi byt cislo, skus to znova:");
+                flag = true;
+            }
+        } while (flag);
+        return o;
+    }
+
     public String someChars() {
         String abc = scanner.nextLine().trim();
+        while (abc.equals("")) {
+            System.out.println("Vstup nesmie byt prazdny!");
+            abc = scanner.nextLine().trim();
+        }
         while (!abc.matches("[a-zA-ZěĚšŠčČřŘžŽýÝáÁíÍéÉůúÚťŤ]*")) {
             System.out.println("Vstup musi obsahovat iba znaky abecedy!");
             abc = scanner.nextLine().trim();
@@ -28,13 +57,18 @@ public class ConsoleUi {
     }
 
     public String allChars() {
-        return scanner.nextLine().trim();
+        String abc = scanner.nextLine().trim();
+        while (abc.equals("")) {
+            System.out.println("Vstup nesmie byt prazdny!");
+            abc = scanner.nextLine().trim();
+        }
+        return abc;
     }
 
     public Gender enumSwitch(int input) {
         while ((input < 1) || (input > 2)) {
             System.out.println("Pohlavie: [1] = muz , [2] = zena");
-            input = Integer.parseInt(scanner.nextLine().trim());
+            input = onlyNumber();
         }
         switch (input) {
             case 1 -> {
@@ -56,20 +90,20 @@ public class ConsoleUi {
         System.out.println("Zadaj priezvisko:");
         String surname = someChars();
         System.out.println("Zadaj vek:");
-        int age = Integer.parseInt(scanner.nextLine().trim());
+        int age = onlyNumber();
         System.out.println("Pohlavie: [1] = muz , [2] = zena");
-        Gender gender = enumSwitch(Integer.parseInt(scanner.nextLine().trim()));
+        Gender gender = enumSwitch(onlyNumber());
         System.out.println("Zadaj email:");
         String email = allChars();
         System.out.println("Zadaj telefon");
-        int tel = Integer.parseInt(scanner.nextLine().trim());
+        int tel = onlyNumber();
         clientService.save(name, surname, age, gender, email, tel);
         System.out.println("Zaznam pridany :\n" + clientService.lastSaved());
         System.out.println("""
                 Je zaznam zadany spravne?
                 [Enter] - pokracovat ; edit - Editovat zaznam.
                 """);
-        if (allChars().equals("edit")) {
+        if (scanner.nextLine().trim().equalsIgnoreCase("edit")) {
             clientService.deleteLast();
             addClientMenu();
         } else {
@@ -82,76 +116,46 @@ public class ConsoleUi {
         Client[] temp = new Client[1];
         clientService.list();
         System.out.println("Zadaj ID zaznamu na vymazanie:");
-        int input = Integer.parseInt(scanner.nextLine().trim());
+        int input = onlyNumber();
         temp[0] = clientService.findById(input);
         clientService.delete(input);
         System.out.println("Zaznam vymazany:\n" + temp[0]);
         temp[0] = null;
-        System.out.println("[Enter] - pokracovat");
-        if (allChars().equals("[press any key to continue]")) {
-            back = true;
-        } else {
-            back = true;
-        }
+        pressAnyKey();
     }
 
     public void listClientMenu() {
         back = false;
         clientService.list();
-        System.out.println("[Enter] - pokracovat");
-        if (allChars().equals("[press any key to continue]")) {
-            back = true;
-        } else {
-            back = true;
-        }
+        pressAnyKey();
     }
 
     public void searchClientByNameMenu() {
         back = false;
         System.out.println("Zadaj meno klienta:");
         clientService.findByName(someChars().toLowerCase());
-        System.out.println("[Enter] - pokracovat");
-        if (allChars().equals("[press any key to continue]")) {
-            back = true;
-        } else {
-            back = true;
-        }
+        pressAnyKey();
     }
 
     public void searchClientBySurameMenu() {
         back = false;
         System.out.println("Zadaj priezvisko klienta:");
         clientService.findBySurname(someChars().toLowerCase());
-        System.out.println("[Enter] - pokracovat");
-        if (allChars().equals("[press any key to continue]")) {
-            back = true;
-        } else {
-            back = true;
-        }
+        pressAnyKey();
     }
 
     public void searchClientByEmailMenu() {
         back = false;
         System.out.println("Zadaj email klienta:");
         clientService.findByEmail(allChars().toLowerCase());
-        System.out.println("[Enter] - pokracovat");
-        if (allChars().equals("[press any key to continue]")) {
-            back = true;
-        } else {
-            back = true;
-        }
+        pressAnyKey();
     }
 
     public void searchClientByTelMenu() {
         back = false;
         System.out.println("Zadaj meno klienta:");
-        clientService.findByTel(Integer.parseInt(scanner.nextLine().trim().toLowerCase()));
-        System.out.println("[Enter] - pokracovat");
-        if (allChars().equals("[press any key to continue]")) {
-            back = true;
-        } else {
-            back = true;
-        }
+        clientService.findByTel(onlyNumber());
+        pressAnyKey();
     }
 
     public void searchClientMenu() {
@@ -167,7 +171,7 @@ public class ConsoleUi {
                     [5] - Navrat
                     =-=-=-=-=-=-=-=-=-=-=-=
                     """);
-            switch (Integer.parseInt(scanner.nextLine().trim())) {
+            switch (onlyNumber()) {
                 case 1 -> {
                     do {
                         searchClientByNameMenu();
@@ -208,34 +212,25 @@ public class ConsoleUi {
                 Bude mat uzivatel admin prava?
                    [1] - nie ; [2] - ano
                 """);
-        int input = Integer.parseInt(scanner.nextLine().trim());
+        int input = onlyNumber();
         while ((input < 1) || (input > 2)) {
             System.out.println("""
                     Bude mat uzivatel admin prava?
                        [1] - nie ; [2] - ano
                     """);
-            input = Integer.parseInt(scanner.nextLine().trim());
+            input = onlyNumber();
         }
         switch (input) {
             case 1 -> {
+
                 userService.saveUser(name, password);
                 System.out.printf("Uzivatel \"%s\" pridany do dtb.\n\n", name);
-                System.out.println("[Enter] - pokracovat");
-                if (allChars().equals("[press any key to continue]")) {
-                    back = true;
-                } else {
-                    back = true;
-                }
+                pressAnyKey();
             }
             case 2 -> {
                 userService.saveAdmin(name, password);
                 System.out.printf("Administrator \"%s\" pridany do dtb.\n\n", name);
-                System.out.println("[Enter] - pokracovat");
-                if (allChars().equals("[press any key to continue]")) {
-                    back = true;
-                } else {
-                    back = true;
-                }
+                pressAnyKey();
             }
         }
     }
@@ -254,12 +249,7 @@ public class ConsoleUi {
                 Uzivatel odstraneny z databaze:
                 %s
                 """, deleteInput);
-        System.out.println("[Enter] - pokracovat");
-        if (allChars().equals("[press any key to continue]")) {
-            back = true;
-        } else {
-            back = true;
-        }
+        pressAnyKey();
     }
 
     public void deleteAdminMenu() {
@@ -276,12 +266,7 @@ public class ConsoleUi {
                 Administrator odstraneny z databaze:
                 %s
                 """, deleteInput);
-        System.out.println("[Enter] - pokracovat");
-        if (allChars().equals("[press any key to continue]")) {
-            back = true;
-        } else {
-            back = true;
-        }
+        pressAnyKey();
     }
 
     public void deleteUserAdminMenu() {
@@ -292,7 +277,7 @@ public class ConsoleUi {
                                 
                 [3] - Navrat
                 """);
-        int input = Integer.parseInt(scanner.nextLine().trim());
+        int input = onlyNumber();
         switch (input) {
             case 1 -> {
                 do {
@@ -318,12 +303,7 @@ public class ConsoleUi {
                 =-=-=-=-=-=-=-=-=-=-=-=-=-=
                 """);
         userService.listOfUsers();
-        System.out.println("[Enter] - pokracovat");
-        if (allChars().equals("[press any key to continue]")) {
-            back = true;
-        } else {
-            back = true;
-        }
+        pressAnyKey();
     }
 
     public void listOfAdminsMenu() {
@@ -333,12 +313,7 @@ public class ConsoleUi {
                 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                 """);
         userService.listOfAdmins();
-        System.out.println("[Enter] - pokracovat");
-        if (allChars().equals("[press any key to continue]")) {
-            back = true;
-        } else {
-            back = true;
-        }
+        pressAnyKey();
     }
 
     public void loginMenu() {
@@ -373,6 +348,7 @@ public class ConsoleUi {
                     Nemas pravo prehliadat tuto sekciu
                     =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
                     """);
+            pressAnyKey();
         } else {
             do {
                 active = true;
@@ -387,7 +363,7 @@ public class ConsoleUi {
                         [5] - Navrat do menu
                         """);
 
-                input = Integer.parseInt(scanner.nextLine().trim());
+                input = onlyNumber();
                 switch (input) {
                     case 1 -> {
                         do {
@@ -395,12 +371,7 @@ public class ConsoleUi {
                         } while (!back);
                         back = false;
                     }
-                    case 2 -> {
-                        do {
-                            deleteUserAdminMenu();
-                        } while (!back);
-                        back = false;
-                    }
+                    case 2 -> deleteUserAdminMenu();
                     case 3 -> {
                         do {
                             listOfUsersMenu();
@@ -440,7 +411,8 @@ public class ConsoleUi {
                                     
                     [8] - Vytvorit test dtb
                     """, session[1], session[0]);
-            switch (Integer.parseInt(scanner.nextLine().trim())) {
+//            try {
+            switch (onlyNumber()) {
                 case 1 -> {
                     do {
                         addClientMenu();
@@ -462,7 +434,11 @@ public class ConsoleUi {
                 }
                 case 5 -> logoutMenu();
                 case 6 -> adminMenu();
-                case 7 -> userService.logout();
+                case 7 -> {
+                    back = false;
+                    active = false;
+                    userService.logout();
+                }
                 case 8 -> clientService.testSubjects();
                 default -> System.out.println("Zadaj cislo podla legendy!");
             }
