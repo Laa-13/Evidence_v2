@@ -128,8 +128,9 @@ public class ClientService {
     public void testSubjects() {
         clientDtb.add(new Client("Janko", "Špánik", 20, Gender.Muz, "janko@mail.sk", 123456789));
         clientDtb.add(new Client("Gabriela", "Úžasná", 19, Gender.Zena, "gabriela@mail.sk", 435892743));
+        clientDtb.add(new Client("Radek", "Pytón", 18, Gender.Muz, "radek@mail.co.uk", 759836829));
+        clientDtb.add(new Client("Milda", "Kotlík", 18, Gender.Muz, "milda@mail.co.uk", 989321234));
         clientDtb.add(new Client("Jozef", "Brokolica", 42, Gender.Muz, "jozef@mail.sk", 759473409));
-        clientDtb.add(new Client("Joris", "Nederland", 48, Gender.Muz, "joris@mail.sk", 283625390));
         clientDtb.add(new Client("Romana", "Stratená", 19, Gender.Zena, "romana@mail.sk", 489384002));
         clientDtb.add(new Client("Boris", "Britva", 51, Gender.Muz, "boris@mail.sk", 338924850));
         clientDtb.add(new Client("Klaudia", "Ostrá", 16, Gender.Zena, "klaudia@mail.sk", 994012012));
@@ -141,7 +142,7 @@ public class ClientService {
         clientDtb.add(new Client("Arnold", "Terminátor", 81, Gender.Muz, "arnold@mail.sk", 644203345));
         clientDtb.add(new Client("James", "Bond", 61, Gender.Muz, "007@mail.sk", 777007007));
         clientDtb.add(new Client("Eliška", "Zdravá", 16, Gender.Zena, "eliska@mail.sk", 843234054));
-        clientDtb.add(new Client("Ondrej", "Perník", 35, Gender.Muz, "pernik@mail.sk", 393939393));
+        clientDtb.add(new Client("Ondrej", "Ďalší", 35, Gender.Muz, "pernik@mail.sk", 393939393));
         clientDtb.add(new Client("Maggie", "Opilá", 13, Gender.Zena, "maggie@mail.sk", 760443876));
         clientDtb.add(new Client("Peter", "Labilný", 30, Gender.Muz, "peter@mail.sk", 859403456));
         clientDtb.add(new Client("Kitty", "Drzá", 13, Gender.Zena, "kitty@mail.sk", 757484943));
